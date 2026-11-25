@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Submit expense | Finance, Stock and Payroll{% endblock %}
+
+{% block content %}
+<h1>Submit an expense</h1>
+<p>New expenses are sent for review. A receipt can be a JPG, PNG, or PDF up to 5 MB.</p>
+<form method="post" enctype="multipart/form-data" class="mt-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Submit for review</button>
+    <a class="btn btn-outline-secondary" href="{% url 'expenses:list' %}">Cancel</a>
+</form>
+{% endblock %}

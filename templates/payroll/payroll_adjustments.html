@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Adjust payroll {{ run.period_label }} | Finance, Stock and Payroll{% endblock %}
+
+{% block content %}
+<h1>Adjust payroll {{ run.period_label }}</h1>
+<p>Explain every non-zero addition or deduction. Net pay cannot be negative.</p>
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% if formset.non_form_errors %}
+        <div class="alert alert-danger">{{ formset.non_form_errors }}</div>
+    {% endif %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Employee</th>
+                    <th scope="col">Monthly salary ({{ run.currency_code }})</th>
+                    <th scope="col">Additions ({{ run.currency_code }})</th>
+                    <th scope="col">Deductions ({{ run.currency_code }})</th>
+                    <th scope="col">Adjustment explanation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+                    <tr>
+                        <td>{{ form.id }}{{ form.instance.employee }}</td>
+                        <td>{{ run.currency_code }} {{ form.instance.monthly_salary }}</td>
+                        <td>{{ form.additions }}{{ form.additions.errors }}</td>
+                        <td>{{ form.deductions }}{{ form.deductions.errors }}</td>
+                        <td>{{ form.adjustment_note }}{{ form.adjustment_note.errors }}{{ form.non_field_errors }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <button class="btn btn-primary" type="submit">Save adjustments</button>
+    <a class="btn btn-outline-secondary" href="{% url 'payroll:detail' run.pk %}">Cancel</a>
+</form>
+{% endblock %}

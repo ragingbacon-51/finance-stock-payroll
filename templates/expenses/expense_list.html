@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Expenses | Finance, Stock and Payroll{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Expenses</h1>
+    <a class="btn btn-primary" href="{% url 'expenses:create' %}">Submit expense</a>
+</div>
+{% if can_review %}
+    <p>Reviewers can see all submitted expenses.</p>
+{% else %}
+    <p>You can see the expenses submitted from your account.</p>
+{% endif %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Category</th>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+                {% if can_review %}<th scope="col">Submitted by</th>{% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.occurred_on }}</td>
+                    <td><a href="{% url 'expenses:detail' expense.pk %}">{{ expense.category }}</a></td>
+                    <td>{{ expense.description }}</td>
+                    <td>{{ expense.amount }}</td>
+                    <td>{{ expense.get_status_display }}</td>
+                    {% if can_review %}<td>{{ expense.submitted_by }}</td>{% endif %}
+                </tr>
+            {% empty %}
+                <tr><td colspan="{% if can_review %}6{% else %}5{% endif %}">No expenses have been submitted.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

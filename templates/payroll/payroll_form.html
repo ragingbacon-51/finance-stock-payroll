@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Create payroll | Finance, Stock and Payroll{% endblock %}
+
+{% block content %}
+<h1>Create monthly payroll</h1>
+<p>Creates a draft for active employees whose salary currency matches the selected code. You can enter explained manual additions and deductions before submission. No currency conversion is performed.</p>
+<form method="post" class="mt-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Create draft</button>
+    <a class="btn btn-outline-secondary" href="{% url 'payroll:list' %}">Cancel</a>
+</form>
+{% endblock %}

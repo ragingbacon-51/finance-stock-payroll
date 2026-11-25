@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Finance, Stock and Payroll System</h1>
+<p>Track expenses and review submissions using your assigned account.</p>
+{% if user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'expenses:list' %}">View expenses</a>
+{% else %}
+    <a class="btn btn-primary" href="{% url 'login' %}">Log in</a>
+{% endif %}
+{% endblock %}

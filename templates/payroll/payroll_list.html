@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Payroll | Finance, Stock and Payroll{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Payroll</h1>
+    {% if can_prepare %}
+        <a class="btn btn-primary" href="{% url 'payroll:create' %}">Create monthly payroll</a>
+    {% endif %}
+</div>
+<p>Monthly salary with manually entered additions and deductions; no automatic statutory tax calculations are applied.</p>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Period</th>
+                <th scope="col">Employees</th>
+                <th scope="col">Net total</th>
+                <th scope="col">Status</th>
+                <th scope="col">Prepared by</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for run in runs %}
+                <tr>
+                    <td><a href="{% url 'payroll:detail' run.pk %}">{{ run.period_label }} {{ run.currency_code }}</a></td>
+                    <td>{{ run.lines.count }}</td>
+                    <td>{{ run.currency_code }} {{ run.total_net_pay }}</td>
+                    <td>{{ run.get_status_display }}</td>
+                    <td>{{ run.prepared_by }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No payroll runs yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

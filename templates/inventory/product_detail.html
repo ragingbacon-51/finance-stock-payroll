@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} | Finance, Stock and Payroll{% endblock %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+<dl class="row">
+    <dt class="col-sm-3">SKU</dt><dd class="col-sm-9">{{ product.sku }}</dd>
+    <dt class="col-sm-3">Available balance</dt><dd class="col-sm-9">{{ product.balance }}</dd>
+    <dt class="col-sm-3">Reorder level</dt><dd class="col-sm-9">{{ product.reorder_level }}</dd>
+</dl>
+{% if can_manage %}
+    <a class="btn btn-primary mb-3" href="{% url 'inventory:movement_create' %}">Record movement</a>
+{% endif %}
+<h2>Movement history</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Movement</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Reason</th>
+                <th scope="col">Recorded by</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movement in movements %}
+                <tr>
+                    <td>{{ movement.created_at }}</td>
+                    <td>{{ movement.get_movement_type_display }}</td>
+                    <td>{{ movement.quantity }}</td>
+                    <td>{{ movement.reason }}</td>
+                    <td>{{ movement.recorded_by }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No stock movements have been recorded.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a class="btn btn-outline-secondary" href="{% url 'inventory:list' %}">Back to stock</a>
+{% endblock %}
