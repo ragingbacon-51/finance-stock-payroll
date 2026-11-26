@@ -1,6 +1,9 @@
 ﻿asgiref==3.13.0
 Django==5.2.19
+django-axes[ipware]==9.1.0
 django-environ==0.14.0
+django-ipware==8.0.0
 pillow==13.0.0
+python-ipware==4.1.1
 sqlparse==0.6.1
 tzdata==2026.6

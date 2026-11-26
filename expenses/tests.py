@@ -170,6 +170,21 @@ class ExpenseWorkflowTests(TestCase):
         self.assertContains(response, 'Delivery fare')
         self.assertNotContains(response, 'other')
 
+    def test_expense_text_is_escaped_in_the_list_and_detail(self):
+        expense = self.create_expense()
+        expense.description = '<script>alert("xss")</script>'
+        expense.save(update_fields=['description'])
+        self.client.force_login(self.submitter)
+
+        for url in (
+            reverse('expenses:list'),
+            reverse('expenses:detail', args=[expense.pk]),
+        ):
+            with self.subTest(url=url):
+                response = self.client.get(url)
+                self.assertNotContains(response, '<script>alert("xss")</script>')
+                self.assertContains(response, '&lt;script&gt;')
+
     def test_reviewer_can_open_an_expense_detail(self):
         expense = self.create_expense()
         self.client.force_login(self.reviewer)

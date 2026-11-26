@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy notice | Finance, Stock and Payroll{% endblock %}
+
+{% block content %}
+<h1>Privacy notice</h1>
+<div class="alert alert-warning">
+    Draft for development only. Before real data is used, the operator must confirm
+    retention and hosting arrangements and have this notice reviewed for applicable
+    Kenyan data-protection requirements.
+</div>
+<h2>Information held</h2>
+<p>The system stores account and login information, employee contact and job details,
+    salary and payroll records, attendance and clock times, expenses and uploaded
+    receipts, activity audit records, and failed login attempts including usernames,
+    IP addresses, timestamps, and browser information. Receipts and free-text notes may contain
+    additional personal information entered by users.</p>
+<h2>How information is used and accessed</h2>
+<p>This information supports account access, attendance, expense review, stock and
+    payroll administration, and accountability. Access depends on assigned permissions:
+    expense submitters can view their own expenses, while authorized reviewers can
+    view others. Authorized HR and payroll roles can access employee records and
+    payroll information as needed for those workflows.</p>
+<h2>Cookies and external services</h2>
+<p>The system uses session and CSRF cookies for sign-in and security. Pages load
+    Bootstrap styling from a third-party content delivery network, which receives
+    requests from your browser. The operator must disclose any hosting, storage,
+    analytics, or other providers actually used before deployment.</p>
+<h2>Retention and requests</h2>
+<p>Uploaded receipts are not automatically deleted. A retention and secure-deletion
+    schedule for receipts, employee information, payroll records, logs, and backups
+    has not yet been set. The operator must establish one taking applicable legal
+    obligations into account.</p>
+<p>For privacy requests, contact
+    <a href="mailto:torqueverseke@gmail.com">torqueverseke@gmail.com</a>.
+    Requests should be handled in accordance with applicable Kenyan
+    data-protection law.</p>
+{% endblock %}

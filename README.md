@@ -43,6 +43,16 @@ against an external registry, convert amounts, calculate statutory deductions, o
 initiate bank payments. Use invented data until payroll rules and local requirements
 have been checked.
 
+## Privacy and uploaded receipts
+
+The application includes a development-only privacy notice at `/privacy/` describing
+the data stored and how it is used. Before handling real data, confirm hosting and
+third-party disclosures, decide legally appropriate retention and
+secure deletion periods, and arrange a review for applicable Kenyan requirements.
+Receipts are not automatically deleted; no retention schedule is implemented.
+Store receipt files privately: never expose `MEDIA_ROOT` or configure a public bucket.
+The permission-checked download view does not protect a public storage URL.
+
 ## Run locally on Windows
 
 1. Create and activate a virtual environment:
@@ -90,3 +100,21 @@ The local development configuration uses SQLite. Do not commit `.env`, real empl
 information, receipts containing private data, or database backups. Before real payroll
 use, confirm the applicable statutory rules and currency codes, configure production
 hosting and database backups, and complete deployment security checks.
+
+## Login and deployment security
+
+Both the normal and admin login are limited to five failed attempts for the same
+username and IP address, followed by a lockout of at least 15 minutes. Further failed
+attempts during lockout can extend it. These records are stored in
+the database; run `python manage.py migrate` after installing the dependencies.
+This is not a general request-rate limiter. Configure an additional rate limit at the
+hosting edge, and verify client IP handling before deploying behind a proxy; otherwise
+the proxy's IP may be used for everyone. Only trust forwarded headers from a proxy
+that strips untrusted incoming values.
+
+For production, set `DEBUG=False`, a unique secret key of at least 50 characters,
+explicit allowed hosts, secure private storage, and HTTPS. Set
+`TRUST_PROXY_SSL_HEADER=True` only if a trusted reverse proxy strips incoming
+`X-Forwarded-Proto` and sets it correctly. Review Django's deployment checks, database
+security, backups, user access, and retention settings before going live. The local
+development environment can continue to use `DEBUG=True`.
