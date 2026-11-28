@@ -1,5 +1,10 @@
 # Finance, Stock and Payroll System
 
+![Status](https://img.shields.io/badge/status-not%20production--ready-orange)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
+> **Development status:** This project is for demonstration and testing with invented data. It is not production-ready and must not be used for real payroll, employee records, receipts, or financial decisions until legal, statutory, security, and hosting reviews are complete.
+
 A Django application for tracking business expenses, stock movements, employee attendance,
 and monthly payroll approvals. Use invented data during development.
 
